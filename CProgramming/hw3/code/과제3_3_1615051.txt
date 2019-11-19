@@ -1,0 +1,28 @@
+#include<stdio.h>
+#define MAX 10
+//두개의 포인터를 비교하고 주소를 바꾸는 프로그램
+void CaE(int *a,int *b){
+	int temp,i;
+	for(i=0;i<MAX-1;i++){
+		if(*a>*b){ //만약 *a의 값이 *b의 값보다 크면 두개의 위치를 바꾼다.
+			temp=*a;
+			*a=*b;
+			*b=temp;
+		}
+	}
+}
+
+int main(void){
+	int A[MAX]={8,3,6,5,1,4,2,7,9,0}; //배열 A를 초기화
+	int min; //최소값 변수 min 선언
+	int i,*ptr1,*ptr2; //변수 i와 포인터 ptr과 minPtr를 선언
+	min=A[0];
+	ptr1=&min; //min의 주소를 포인터 ptr1에 선언
+	ptr2=A; //포인터 minPtr의 주소가 변수 min의 주소를 가리키도록 선언
+	//최소값을 찾아 min변수에 저장하는 반복문
+	for(i=0;i<MAX;i++){ 
+		CaE(ptr1,(ptr2+i)); //함수 호출
+	}
+	printf("최소값 = %d\n",min); //최소값 출력
+	return 0;
+}

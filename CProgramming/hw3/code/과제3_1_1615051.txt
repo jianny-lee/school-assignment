@@ -1,0 +1,50 @@
+#include<stdio.h>
+#include<string.h> //문자열 헤더파일
+int main(void){
+	//각각에 필요한 변수 선언과 name,minScore,finalScore 배열을 초기화
+	char name[6][20]={"이민지","여나경","이효진","이영은","유찬솔","이도경"};
+	char sname[20];
+	int minScore[6]={75,80,95,90,100,86};
+	int finalScore[6]={100,90,86,97,88,77};
+	int i,flag=0,sum1=0,sum2=0;
+	double average;
+
+	//배열에 초기화한 점수들의 중간 평균과 기말 평균을 구하는 반복문
+	for(i=0;i<6;i++){
+		sum1+=minScore[i];
+		sum2+=finalScore[i];
+	}
+
+	printf("중간 시험 평균 = %.2f\n",sum1/6.0); //중간 시험 평균
+	printf("기말 시험 평균 = %.2f\n\n",sum2/6.0); //기말 시험 평균
+
+	//끝이라는 입력을 할때까지 학생별 시험 성적을 출력하는 프로그램
+	while(1){
+		//학생의 이름을 입력받음
+		printf("학생 이름을 입력하세요 : ");
+		scanf("%s",sname);
+		for(i=0;i<6;i++){
+			/*만약 sname이라는 문자열 배열과 name이라는 문자열 배열을 비교하여 
+			일치하는 문자열이 있는지 확인하는 if문*/
+			if(strcmp(sname,name[i])==0){ 
+				average=(double)(minScore[i]+finalScore[i])/2; //학생의 평균값 구하기
+				printf("중간 = %d, 기말 = %d, 평균 = %.2f\n\n",minScore[i],finalScore[i],average);
+				flag=1; //값을 출력할 때 flag 변수를 1로 바꾼다.
+				break; //반복문 for을 빠져 나온다.
+			}else if(strcmp(sname,"끝")==0){
+				flag=2;
+				break;
+			}else
+				flag=0;
+		}
+		//만약 flag가 0이면 다음의 문장을 출력한다.
+		if(flag==0)
+			printf("그 학생은 우리반 학생이 아닙니다!\n\n");
+		//만약 flag가 2이면 반복문 while을 나오고 프로그램을 끝낸다.
+		else if(flag==2){
+			printf("다음에 또 만나요!\n\n");
+			break;
+		}
+	}
+	return 0;
+}

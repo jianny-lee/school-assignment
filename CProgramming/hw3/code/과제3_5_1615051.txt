@@ -1,0 +1,115 @@
+#include<stdio.h>
+#include<string.h>
+//학년을 1~4학년으로 고정
+enum level {freshman=1,sophomore,junior,senior};
+struct student{	//학생 구조체 선언
+	char name[20]; //이름
+	enum level year; //학년
+	int score; //점수
+};
+typedef struct student STUDENT; //닉네임 정의
+
+//학생 정보 전체를 화면에 출력하는 함수
+void PrintList(STUDENT *p,int num){
+	int i;
+	printf("*** 학생 명단 ***\n");
+	//전체 학생의 명단을 반복문을 이용하여 출력한다.
+	for(i=0;i<num;i++){
+		printf("%5s %2d학년 %3d점\n",(p+i)->name,(p+i)->year,(p+i)->score);
+	}
+	printf("\n");
+}
+//학년 학생들의 정보를 출력하는 함수
+void PrintByYear(STUDENT *p,int num,char year){
+	int i;
+	printf("*** %d학년 명단 ***\n",year);
+	//전체 학생들의 명단 중에서 1학년인 학생들만 출력한다.
+	for(i=0;i<num;i++){
+		if((p+i)->year==year)
+		printf("%5s %2d학년 %3d점\n",(p+i)->name,(p+i)->year,(p+i)->score);
+	}
+	printf("\n");
+}
+//최우수 성적의 학생의 정보를 출력하는 함수
+void PrintTop(STUDENT *p,int num){
+	int i;
+	STUDENT *topStudent; //구조체 포인터 topStudent를 선언
+	topStudent=p; //topStudent의 주소가 p[0]의 주소와 같다고 선언
+	printf("*** 최우수 학생 ***\n");
+	for(i=1;i<num;i++){
+		//만약 topStudent의 score가 (p+i)의 score보다 작으면
+		if(topStudent->score<(p+i)->score){
+			topStudent=(p+i); //(p+i)의 구조체는 topStudent의 구조체가 된다.		
+		}
+	}
+	printf("%5s %2d학년 %3d점\n\n",topStudent->name,topStudent->year,topStudent->score);
+
+
+}
+//전체 학생들의 성적 평균을 구하는 함수
+void PrintAverage(STUDENT *p,int num){
+	int i,sum=0;
+	double average;
+	printf("*** 학급 평균 ***\n");
+	//전체 학생들의 점수를 더하는 반복문
+	for(i=0;i<num;i++){
+		sum+=(p+i)->score;
+	}
+	average=sum/(float)num; //평균을 구한다
+	printf("평균 = %.2f\n\n",average);
+
+}
+int main(void){
+	STUDENT student[10];//구조체 배열을 선언
+	STUDENT *s=student; //student 배열을 구조체 포인터 s라고 선언.
+	int i;
+	int num;
+	
+	//학생들의 정보를 입력
+	strcpy(s->name,"김이화");
+	s->year=junior;
+	s->score=70;
+
+	strcpy((s+1)->name,"박슬기");
+	(s+1)->year=freshman;
+	(s+1)->score=80;
+
+	strcpy((s+2)->name,"손서영");
+	(s+2)->year=freshman;
+	(s+2)->score=70;
+
+	strcpy((s+3)->name,"이경연");
+	(s+3)->year=senior;
+	(s+3)->score=80;
+
+	strcpy((s+4)->name,"고우리");
+	(s+4)->year=junior;
+	(s+4)->score=60;
+
+	strcpy((s+5)->name,"장민지");
+	(s+5)->year=sophomore;
+	(s+5)->score=90;
+
+	strcpy((s+6)->name,"이호영");
+	(s+6)->year=freshman;
+	(s+6)->score=85;
+
+	strcpy((s+7)->name,"김경민");
+	(s+7)->year=junior;
+	(s+7)->score=75;
+
+	strcpy((s+8)->name,"이상은");
+	(s+8)->year=sophomore;
+	(s+8)->score=50;
+
+	strcpy((s+9)->name,"차유경");
+	(s+9)->year=senior;
+	(s+9)->score=65;
+	
+	PrintList(s,10); //학생 정보 전체 출력 함수
+	PrintByYear(s,10,freshman); //'학년'학생 정보 출력 함수
+	PrintTop(s,10); //최우수 학생 정보 출력 함수
+	PrintAverage(s,10); //성적 평균 출력 함수
+	
+	return 0;
+}
